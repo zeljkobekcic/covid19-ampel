@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="n.css">
+<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+
+<header>
+<h1>Corona-Tracking Ampel</h1>
+<h2>Geben Sie ihre Postleitzahl und ihren Gesundheitsstand an, um zur interaktiven Karte zu gelangen.</h2>
+</header>
+
+<form id="register">
+
+<div style="float:left">
+<legend>Postleitzahl:&nbsp;<input id="number" type="number" name="zipcode"></legend>
+</div>
+<fieldset id="ampel">
+<label>
+  <div style="float:left">
+  <input id="radio-red" name="ampel" type="submit" value="red">
+  <img src="red.svg">
+  </div>
+  <p>Ich bin krank und zeige Covid-19 typische Symptome.</p>
+  <p style="clear:left"></p>
+</label>
+<br>
+<label>
+  <div style="float:left">
+  <input id="radio-yellow" name="ampel" type="submit" value="yellow">
+  <img src="yellow.svg">
+  </div>
+  <p>Ich habe mindestens eins dieser Symptome: </p>
+  <p style="clear:left"></p>
+</label>
+<br>
+<label>
+  <div style="float:left">
+  <input id="radio-green" name="ampel" type="submit" value="green">
+  <img src="green.svg">
+  </div>
+  <p>Mir geht es rundum gut!</p>
+  <p style="clear:left"></p>
+</label>
+</fieldset>
+<input type="submit" value="Weiter zur Karte">
+
+</form>
+
+</body>
+</html>
+
