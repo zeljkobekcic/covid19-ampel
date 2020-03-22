@@ -1,19 +1,211 @@
-/*
-// HIDE RADIO
-[type=submit] { 
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
+.kanye {
+    top: 50px;
+    left: 1043px;
+    width: 179px;
+    height: 316px;
+    background: transparent 0% 0% no-repeat padding-box;
+    opacity: 1;
 }
 
-// IMAGE STYLES
-[type=submit] + img {
-  cursor: pointer;
+.uschi {
+    top: 91px;
+    left: 143px;
+    width: 175px;
+    height: 256px;
+    background: transparent 0% 0% no-repeat padding-box;
+    opacity: 1;
 }
 
-// CHECKED STYLES
-[type=submit]:checked + img {
-  outline: 2px solid #aaa;
+#greentext {
+    top: 787px;
+    left: 426px;
+    width: 571px;
+    height: 48px;
+    text-align: left;
+    font: Bold 20px/24px Roboto;
+    letter-spacing: 0;
+    color: #0E3E45;
+    opacity: 1;
 }
-*/
+
+#yellowtext > b {
+    top: 0px;
+    left: 0px;
+    width: 569px;
+    height: 24px;
+    text-align: left;
+    font: Bold 20px/24px Roboto;
+    letter-spacing: 0;
+    color: #0E3E45;
+}
+
+#yellowtext {
+    top: 72px;
+    left: 0px;
+    width: 560px;
+    height: 24px;
+    text-align: left;
+    font: 20px/24px Roboto;
+    letter-spacing: 0;
+    color: #0E3E45;
+}
+
+#redtext {
+    top: 563px;
+    left: 426px;
+    width: 432px;
+    height: 24px;
+    text-align: left;
+    font: Bold 20px/24px Roboto;
+    letter-spacing: 0;
+    color: #0E3E45;
+    opacity: 1;
+}
+
+body {
+    top: 0px;
+    left: 0px;
+    width: 1366px;
+    height: 1576px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.bg {
+    top: 0px;
+    left: 0px;
+    width: 1366px;
+    height: 611px;
+    background: transparent linear-gradient(180deg, #D0E8EB 0%, #FFFFFF 100%) 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.text {
+    top: 340px;
+    left: 344px;
+    width: 678px;
+    height: 48px;
+    text-align: center;
+    font: 20px/24px Roboto;
+    letter-spacing: 0;
+    color: #0E3E45;
+    opacity: 1;
+}
+
+.welcome {
+    top: 123px;
+    left: 543px;
+    width: 282px;
+    height: 38px;
+    text-align: center;
+    font: 32px/38px Roboto;
+    letter-spacing: 0;
+    color: #0E3E45;
+    opacity: 1;
+}
+
+.title {
+    top: 125px;
+    left: 364px;
+    width: 638px;
+    height: 183px;
+    text-align: center;
+    font: Bold 94px/80px Passion One;
+    letter-spacing: 0;
+    color: #3F7E86;
+    opacity: 1;
+}
+
+.ziplabel {
+    top: 449px;
+    left: 507px;
+    width: 98px;
+    height: 24px;
+    text-align: left;
+    font: Bold 20px/24px Roboto;
+    letter-spacing: 0;
+    color: #0E3E45;
+    opacity: 1;
+}
+
+.zipcodeinput {
+    top: 493px;
+    left: 525px;
+    width: 266px;
+    height: 50px;
+    text-align: left;
+    font: Bold 43px/50px Roboto;
+    letter-spacing: 0;
+    color: #0E3E45;
+    opacity: 0.1;
+}
+
+.what {
+    top: 1268px;
+    left: 139px;
+    width: 352px;
+    height: 156px;
+    text-align: center;
+    font: Regular 16px/22px Roboto;
+    letter-spacing: 0;
+    color: #0E3E45;
+    opacity: 1;
+}
+
+.you {
+    top: 1268px;
+    left: 507px;
+    width: 352px;
+    height: 156px;
+    text-align: center;
+    font: Regular 16px/22px Roboto;
+    letter-spacing: 0;
+    color: #0E3E45;
+    opacity: 1;
+}
+
+.aservice {
+    top: 1268px;
+    left: 875px;
+    width: 352px;
+    height: 156px;
+    text-align: center;
+    font: Regular 16px/22px Roboto;
+    letter-spacing: 0;
+    color: #0E3E45;
+    opacity: 1;
+}
+
+#h2 {
+    top: 1218px;
+    left: 891px;
+    width: 320px;
+    height: 42px;
+    text-align: center;
+    font: Bold 32px/36px Passion One;
+    letter-spacing: 0;
+    color: #3F7E86;
+    opacity: 1;
+}
+
+.rechteck4 {
+    top: 1495px;
+    left: 139px;
+    width: 1088px;
+    height: 82px;
+    background: #3F7E86 0% 0% no-repeat padding-box;
+    border-radius: 6px 6px 0px 0px;
+    opacity: 1;
+}
+
+.rechteck4text {
+    top: 1527px;
+    left: 944px;
+    width: 255px;
+    height: 19px;
+    text-align: right;
+    font: Regular 16px/22px Roboto;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    opacity: 0.5;
+}
