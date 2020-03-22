@@ -1,0 +1,19 @@
+/*
+// HIDE RADIO
+[type=submit] { 
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+// IMAGE STYLES
+[type=submit] + img {
+  cursor: pointer;
+}
+
+// CHECKED STYLES
+[type=submit]:checked + img {
+  outline: 2px solid #aaa;
+}
+*/
