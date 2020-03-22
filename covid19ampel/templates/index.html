@@ -1,53 +1,83 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Covid19 Ampel</title>
-    <meta charset="UTF-8"/>
-    <link rel="stylesheet"
-          href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-          crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-            crossorigin="">
-    </script>
-    <style>
-        html, body {
-            width: 99%;
-            height: 98%;
-            font-size: 14px;
-            z-index: 0;
-        }
-    </style>
-    <script>
-        var map;
-        const postcode_geojsons = {{ geojsons | safe }};
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/normalize.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/main.css') }}">
 
-        function init() {
-            console.log("HELLO");
-            map = L.map('map_container').setView([51.179966, 6.692198], 12);
-            mapLink = '<a href="https://openstreetmap.org">OpenStreetMap</a>';
-            L.tileLayer(
-                'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: 'Map data &copy; ' + mapLink,
-                    maxZoom: 18
-                }).addTo(map);
-
-             L.geoJSON(postcode_geojsons, {
-                    style: function (feature) {
-                        if (feature.properties.danger > 50) {
-                            return {color: '#ff0000'};
-                        } else {
-                            return {color: '#00ff00'};
-                        }
-                    }
-                }
-            ).addTo(map);
-        }
-    </script>
 </head>
-<body onload="init()">
-<div id="map_container"
-     style="width: 100%; height: 100%; border: solid 1px"></div>
+<body style="margin: 5%">
+
+<header>
+    <div>
+        <h1>Nachbarschafts-Corona-Ampel</h1>
+        <p>Hier kannst du einen Überblick über die betroffenen Gebiete in deiner Nähe bekommen.</p>
+    </div>
+    <br>
+    <div style="display: table-row">
+        <div style="display: table-cell">
+            <h2>Willkommen bei der Nachbarschafts-Corona-Ampel.</h2>
+            Wir wollen die Hilfe der Bürger nutzen, um einen feineren Überblick über die Verbreitung des Corona-Virus zu
+            bekommen und du kannst uns dabei helfen.</p>
+        </div>
+
+        <div style="display: table-cell">
+            <h2>Was passiert hier?</h2>
+            <p>Wir benutzen die Fallzahlen der verschiedenen Landkreise und Informationen aus der Bevölkerung, um zu
+                ermitteln, wie betroffen die verschiedenen Gebiete in Deutschland sind.
+                Bitte bedenkt dabei, dass wir lediglich einen Überblick verschaffen, aber nicht die tatsächliche Lage
+                wiedergeben können.</p>
+        </div>
+
+        <div style="display: table-cell">
+            <h2>Du kannst uns helfen ...</h2>
+            <p>die Lage genauer zu erfassen. Fülle dafür einfach unser kurzes Formular aus und schon siehst du, wie es
+                momentan aussieht.
+                Egal, wie dein Landkreis eingefärbt ist, behalte einen ruhigen Kopf und versuche nicht, in einen anderen
+                Landkreis zu fliehen.</p>
+        </div>
+    </div>
+</header>
+
+<form id="register" style="clear: right">
+
+    <div style="float:left">
+        <legend>Postleitzahl:&nbsp;<input id="number" type="number" name="zipcode"></legend>
+    </div>
+    <fieldset id="ampel">
+        <label>
+            <div style="float:left">
+                <input id="radio-red" name="ampel" type="submit" value="red">
+                <img src="{{ url_for('static',filename='img/red.svg') }}">
+            </div>
+            <p>Mir wurde bestätigt, den Corona-Virus zu haben.</p>
+            <p style="clear:left"></p>
+        </label>
+        <br>
+        <label>
+            <div style="float:left">
+                <input id="radio-yellow" name="ampel" type="submit" value="yellow">
+                <img src="{{ url_for('static',filename='img/yellow.svg') }}">
+            </div>
+            <p>Ich fühle mich krank und habe mindestens eines der folgenden Symptome: Fieber, Husten, Kurzatmigkeit oder
+                Halsschmerzen. Weitere Symptome können auch Muskel- /Gelenkschmerzen, Kopfschmerzen, Übelkeit/Erbrechen,
+                eine verstopfte Nase oder Durchfall sein. </p>
+            <p style="clear:left"></p>
+        </label>
+        <br>
+        <label>
+            <div style="float:left">
+                <input id="radio-green" name="ampel" type="submit" value="green">
+                <img src="{{ url_for('static',filename='img/green.svg') }}">
+            </div>
+            <p>Ich fühle mich gesund und hatte seit mindestens 2 Wochen keinen Kontakt zu einem bestätigten
+                Corona-Patienten.</p>
+            <p style="clear:left"></p>
+        </label>
+    </fieldset>
+    <input type="submit" value="Weiter zur Karte">
+
+</form>
+
 </body>
 </html>
+

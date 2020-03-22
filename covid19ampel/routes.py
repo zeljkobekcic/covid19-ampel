@@ -7,6 +7,11 @@ import os
 from flask import render_template
 
 
+@app.route('/', methods=['GET'])
+def get_landing_page():
+    return render_template('index.html')
+
+
 @app.route('/by/postcode/<postcode>', methods=['GET'])
 def get_postcode_center(postcode: str):
     conn = psycopg2.connect(
@@ -53,5 +58,5 @@ def get_postcode_center(postcode: str):
             for geom, postcode, *_ in cur_iterator()
         ]
 
-    return render_template('index.html',geojsons=geojsons)
+    return render_template('map.html', geojsons=geojsons)
 
