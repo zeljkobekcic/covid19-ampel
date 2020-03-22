@@ -23,6 +23,20 @@
         var map;
         const postcode_geojsons = {{ geojsons | safe }};
 
+        function perc2color(perc) {
+            var r, g, b = 0;
+            if(perc < 50) {
+                r = 255;
+                g = Math.round(5.1 * perc);
+            }
+            else {
+                g = 255;
+                r = Math.round(510 - 5.10 * perc);
+            }
+            var h = r * 0x10000 + g * 0x100 + b * 0x1;
+            return '#' + ('000000' + h.toString(16)).slice(-6);
+        }
+
         function init() {
             console.log("HELLO");
             map = L.map('map_container').setView({{ center | safe }}, 12);
@@ -35,11 +49,15 @@
 
              L.geoJSON(postcode_geojsons, {
                     style: function (feature) {
-                        if (feature.properties.danger > 50) {
-                            return {color: '#ff0000'};
-                        } else {
-                            return {color: '#00ff00'};
-                        }
+                        var probability = 100 - 100 * (feature.properties.danger / feature.properties.danger_max);
+                        var color = perc2color(probability);
+
+                        console.log(feature.properties.postcode);
+                        console.log(probability);
+                        console.log(color);
+                        console.log('--------');
+
+                        return {color: color}
                     }
                 }
             ).addTo(map);
