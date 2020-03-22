@@ -2,7 +2,6 @@ import psycopg2
 import json
 from . import app
 import random
-from pprint import pprint
 import os
 
 from flask import render_template
@@ -44,6 +43,8 @@ def get_postcode_center(postcode: str):
             {
                 'type': 'Feature',
                 'properties': {
+                    'danger_min': 0,
+                    'danger_max': 100,
                     'danger': random.randint(0, 100),
                     'postcode': postcode
                 },
@@ -51,7 +52,6 @@ def get_postcode_center(postcode: str):
             }
             for geom, postcode, *_ in cur_iterator()
         ]
-
 
     return render_template('index.html',geojsons=geojsons)
 
