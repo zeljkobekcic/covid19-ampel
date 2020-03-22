@@ -15,7 +15,6 @@ flask-cors = "*"
 psycopg2 = "*"
 python-dotenv = "*"
 flask-dotenv = "*"
-<<<<<<< HEAD
 numpy = "*"
 pandas = "*"
 scipy = "*"
