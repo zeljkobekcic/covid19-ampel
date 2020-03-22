@@ -1,10 +1,13 @@
 import json
+import os
+import psycopg2
 
 import numpy as np
 import pandas as pd
 import requests
 import datetime as dt
-from covid19ampel import logistic as l
+from . import logistic as l
+
 
 
 def clean_landkreis(value: str) -> str:
@@ -99,6 +102,7 @@ def main():
     result.loc[:, "AnzahlImmun"] = result["Landkreis"].map(immune_cases["AnzahlFall"].to_dict()).replace(np.nan, 0)
     result.loc[:, "AnzahlAktiv"] = result["Landkreis"].map(active_cases["AnzahlFall"].to_dict()).replace(np.nan, 0)
     result.loc[:, "Erster Fall"] = result["Landkreis"].map(first_case.to_dict())
+
 
     result.to_csv("data/result.csv")
 
