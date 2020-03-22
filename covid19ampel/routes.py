@@ -1,62 +1,83 @@
 import psycopg2
 import json
 from . import app
+from .ampel_form import AmpelForm
 import random
 import os
 
-from flask import render_template
+from flask import render_template, request, redirect
 
 
-@app.route('/', methods=['GET'])
+@app.route("/", methods=["GET", "POST"])
 def get_landing_page():
-    return render_template('index.html')
+    form = AmpelForm()
+
+    if request.method == "POST" and form.validate_on_submit():
+        print(form.postcode.data)
+        print(form.ampel.data)
+        print(form.postcode.errors)
+        print(form.ampel.errors)
+        redirect("/postcodemap")
+
+    return render_template("index.html", form=form)
 
 
-@app.route('/by/postcode/<postcode>', methods=['GET'])
-def get_postcode_center(postcode: str):
+@app.route("/postcodemap", methods=["POST"])
+def get_postcode_center():
+    form = AmpelForm()
+
+    if not form.validate_on_submit():
+        print(form.postcode.data)
+        print(form.ampel.data)
+        print(form.postcode.errors)
+        print(form.ampel.errors)
+        return redirect("/")
+
     conn = psycopg2.connect(
-        host=os.environ['PSQL_HOST'],
-        dbname=os.environ['PSQL_DBNAME'],
-        user=os.environ['PSQL_USER'],
-        password=os.environ['PSQL_PASSWORD']
+        host=os.environ["PSQL_HOST"],
+        dbname=os.environ["PSQL_DBNAME"],
+        user=os.environ["PSQL_USER"],
+        password=os.environ["PSQL_PASSWORD"],
     )
     with conn.cursor() as cur:
         cur.execute(
             """
-            SELECT ST_AsGeoJson(plz_gebiete.geom), plz_gebiete.plz
+            SELECT 
+                ST_AsGeoJson(plz_gebiete.geom) :: json, 
+                ST_AsGeoJson(ST_Centroid(plz_gebiete.geom)) :: json,
+                plz_gebiete.plz
             FROM plz_gebiete
             WHERE ST_INTERSECTS(
                 geom,
                 (
                     SELECT plz_gebiete.geom
                     FROM plz_gebiete
-                    WHERE plz_gebiete.plz = '41460'
+                    WHERE plz_gebiete.plz = %(postcode)s
                     LIMIT 1
                 )
             );
             """,
-            {'postcode': postcode}
+            {"postcode": form.postcode.data},
         )
 
-        def cur_iterator():
-            row = cur.fetchone()
-            while row is not None:
-                yield row
-                row = cur.fetchone()
-
+        rows = cur.fetchall()
         geojsons = [
             {
-                'type': 'Feature',
-                'properties': {
-                    'danger_min': 0,
-                    'danger_max': 100,
-                    'danger': random.randint(0, 100),
-                    'postcode': postcode
+                "type": "Feature",
+                "properties": {
+                    "danger_min": 0,
+                    "danger_max": 100,
+                    "danger": random.randint(0, 100),
+                    "postcode": postcode,
                 },
-                'geometry': json.loads(geom)
+                "geometry": geom,
             }
-            for geom, postcode, *_ in cur_iterator()
+            for geom, _, postcode, *_ in rows
         ]
 
-    return render_template('map.html', geojsons=geojsons)
+        center = None
+        for row in rows:
+            if row[2] == form.postcode.data:
+                center = [row[1]["coordinates"][1], row[1]["coordinates"][0]]
 
+    return render_template("map.html", geojsons=geojsons, center=center)

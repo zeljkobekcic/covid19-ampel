@@ -38,44 +38,16 @@
     </div>
 </header>
 
-<form id="register" style="clear: right">
-
-    <div style="float:left">
-        <legend>Postleitzahl:&nbsp;<input id="number" type="number" name="zipcode"></legend>
-    </div>
-    <fieldset id="ampel">
-        <label>
-            <div style="float:left">
-                <input id="radio-red" name="ampel" type="submit" value="red">
-                <img src="{{ url_for('static',filename='img/red.svg') }}">
-            </div>
-            <p>Mir wurde bestätigt, den Corona-Virus zu haben.</p>
-            <p style="clear:left"></p>
-        </label>
-        <br>
-        <label>
-            <div style="float:left">
-                <input id="radio-yellow" name="ampel" type="submit" value="yellow">
-                <img src="{{ url_for('static',filename='img/yellow.svg') }}">
-            </div>
-            <p>Ich fühle mich krank und habe mindestens eines der folgenden Symptome: Fieber, Husten, Kurzatmigkeit oder
-                Halsschmerzen. Weitere Symptome können auch Muskel- /Gelenkschmerzen, Kopfschmerzen, Übelkeit/Erbrechen,
-                eine verstopfte Nase oder Durchfall sein. </p>
-            <p style="clear:left"></p>
-        </label>
-        <br>
-        <label>
-            <div style="float:left">
-                <input id="radio-green" name="ampel" type="submit" value="green">
-                <img src="{{ url_for('static',filename='img/green.svg') }}">
-            </div>
-            <p>Ich fühle mich gesund und hatte seit mindestens 2 Wochen keinen Kontakt zu einem bestätigten
-                Corona-Patienten.</p>
-            <p style="clear:left"></p>
-        </label>
-    </fieldset>
-    <input type="submit" value="Weiter zur Karte">
-
+<form method="POST" action="/postcodemap">
+    {{ form.postcode.label }} {{ form.postcode }}
+    {% for subfield in form.ampel %}
+        <p>
+            {{ subfield }}:
+            {{ subfield.label }}
+        </p>
+    {% endfor %}
+    {{ form.submit() }}
+    {{ form.csrf_token }}
 </form>
 
 </body>
