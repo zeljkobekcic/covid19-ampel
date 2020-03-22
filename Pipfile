@@ -15,10 +15,12 @@ flask-cors = "*"
 psycopg2 = "*"
 python-dotenv = "*"
 flask-dotenv = "*"
+<<<<<<< HEAD
 numpy = "*"
 pandas = "*"
 scipy = "*"
 requests = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
