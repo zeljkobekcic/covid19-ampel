@@ -1,13 +1,13 @@
+import datetime as dt
 import json
 import os
-import psycopg2
 
 import numpy as np
 import pandas as pd
+import psycopg2
 import requests
-import datetime as dt
-from . import logistic as l
 
+from . import logistic as l
 
 
 def clean_landkreis(value: str) -> str:
@@ -73,7 +73,7 @@ def main():
 
     result = zipcodes.join(active_cases, on="Landkreis", how="left")
     result.loc[:, "landkreis_einwohner"] = result["Landkreis"].map(landkreis_einwohner)
-    result.loc[:, "Fälle pro 100K"] = 10**5 * result["AnzahlFall"] / result["landkreis_einwohner"]
+    result.loc[:, "Fälle pro 100K"] = 10 ** 5 * result["AnzahlFall"] / result["landkreis_einwohner"]
     result.loc[:, "Einträge rot"] = 0
     result.loc[:, "Einträge gelb"] = 0
     result.loc[:, "Einträge grün"] = 0
@@ -103,7 +103,32 @@ def main():
     result.loc[:, "AnzahlAktiv"] = result["Landkreis"].map(active_cases["AnzahlFall"].to_dict()).replace(np.nan, 0)
     result.loc[:, "Erster Fall"] = result["Landkreis"].map(first_case.to_dict())
 
-
+    con = psycopg2.connect(
+        host=os.environ["PSQL_HOST"],
+        dbname=os.environ["PSQL_DBNAME"],
+        user=os.environ["PSQL_USER"],
+        password=os.environ["PSQL_PASSWORD"],
+    )
+    db_write = (
+        result
+            .rename({
+            "einwohner": "einwohner_plz",
+            "Landkreis": "landkreis",
+            "AnzahlAktiv": "anzahl_fall_aktiv_landkreis",
+            "AnzahlImmun": "anzahl_fall_immun_landkreis",
+            "AnzahlTodesfall": "anzahl_tode_landkreis",
+            "landkreis_einwohner": "einwohner_landkreis",
+            "Fälle pro 100K": "faelle_pro_hunderttausend",
+            "Einträge rot": "eintrag_rot",
+            "Einträge gelb": "eintrag_gelb",
+            "Einträge grün": "eintrag_gruen",
+            "Prognose": "prognose",
+            "Wachstum": "wachstum",
+            "Erster Fall": "erster_fall"
+        })
+            .drop("AnzahlFall")
+            .to_sql(name="results", con=con)
+    )
     result.to_csv("data/result.csv")
 
 
