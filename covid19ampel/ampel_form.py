@@ -8,12 +8,17 @@ from wtforms.validators import InputRequired, Length
 
 class PostcodeValidator:
     def __init__(self, message=None):
-        conn = psycopg2.connect(
-            host=os.environ["PSQL_HOST"],
-            dbname=os.environ["PSQL_DBNAME"],
-            user=os.environ["PSQL_USER"],
-            password=os.environ["PSQL_PASSWORD"],
-        )
+        try:
+            login = {
+                'host': os.environ["PSQL_HOST"],
+                'dbname': os.environ["PSQL_DBNAME"],
+                'user': os.environ["PSQL_USER"],
+                'password': os.environ["PSQL_PASSWORD"],
+            }
+            conn = psycopg2.connect(**login)
+        except KeyError:
+            DATABASE_URL = os.environ['DATABASE_URL']
+            conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
         if message is None:
             self.message = "postcode has not been found"
@@ -33,7 +38,8 @@ class AmpelForm(FlaskForm):
     postcode = StringField(
         "Meine Postleitzahl",
         validators=[
-            InputRequired("Das Postleitzahlfeld ist notwendig um fortzufahren"),
+            InputRequired(
+                "Das Postleitzahlfeld ist notwendig um fortzufahren"),
             PostcodeValidator("Bitte eine gültige Postleitzahl eingeben"),
         ],
     )

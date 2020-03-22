@@ -33,12 +33,18 @@ def get_postcode_center():
         print(form.ampel.errors)
         return redirect("/")
 
-    conn = psycopg2.connect(
-        host=os.environ["PSQL_HOST"],
-        dbname=os.environ["PSQL_DBNAME"],
-        user=os.environ["PSQL_USER"],
-        password=os.environ["PSQL_PASSWORD"],
-    )
+    try:
+        login = {
+            'host': os.environ["PSQL_HOST"],
+            'dbname': os.environ["PSQL_DBNAME"],
+            'user': os.environ["PSQL_USER"],
+            'password': os.environ["PSQL_PASSWORD"],
+        }
+        conn = psycopg2.connect(**login)
+    except KeyError:
+        DATABASE_URL = os.environ['DATABASE_URL']
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
     with conn.cursor() as cur:
         cur.execute(
             """

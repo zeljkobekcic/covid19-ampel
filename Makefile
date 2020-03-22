@@ -10,7 +10,7 @@ include .env
 PSQL_ARGS = --host $(PSQL_HOST) --port $(PSQL_PORT) --user $(PSQL_USER) --dbname $(PSQL_DBNAME)
 
 setup_shapefiles:
-	# wget $(plz_shapefiles_url) --directory-prefix $(target_directory)
+	wget $(plz_shapefiles_url) --directory-prefix $(target_directory)
 	unzip $(target_shapefile_zipped) -d $(target_directory)
 	shp2pgsql -c -D -I -S -s 4326 $(sql_shapefile) plz_gebiete > $(sql_shapefile)
 	PGPASSWORD=$(PSQL_PASSWORD) psql $(PSQL_ARGS) --file $(sql_shapefile)
