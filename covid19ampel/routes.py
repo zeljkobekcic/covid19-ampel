@@ -1,4 +1,5 @@
 import psycopg2
+import pandas as pd
 import json
 from . import app
 from .ampel_form import AmpelForm
@@ -7,6 +8,9 @@ import os
 
 from flask import render_template, request, redirect
 
+df = pd.read_csv('data/result.csv', index_col='plz')
+min_pro_thousand = df['Fälle pro 100K'].min()
+max_pro_thousand = df['Fälle pro 100K'].max()
 
 @app.route("/", methods=["GET", "POST"])
 def get_landing_page():
@@ -71,9 +75,9 @@ def get_postcode_center():
             {
                 "type": "Feature",
                 "properties": {
-                    "danger_min": 0,
-                    "danger_max": 100,
-                    "danger": random.randint(0, 100),
+                    "danger_min": min_pro_thousand,
+                    "danger_max": max_pro_thousand,
+                    "danger": df['Fälle pro 100K'].loc[postcode],
                     "postcode": postcode,
                 },
                 "geometry": geom,
