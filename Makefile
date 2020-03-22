@@ -3,18 +3,18 @@ einwohnerzahl_csv:="https://www.suche-postleitzahl.org/download_files/public/plz
 plz_landkreis_csv:="https://www.suche-postleitzahl.org/download_files/public/zuordnung_plz_ort_landkreis.csv"
 target_directory:=/tmp/
 target_shapefile:=/tmp/plz-gebiete.shp
-sql_shapefile:=/tmp/plz-gebiete.sql
+sql_shapefile:=data/plz-gebiete.sql
 target_shapefile_zipped:=$(target_shapefile).zip
 
 include .env
 PSQL_ARGS = --host $(PSQL_HOST) --port $(PSQL_PORT) --user $(PSQL_USER) --dbname $(PSQL_DBNAME)
 
 setup_shapefiles:
-	wget $(plz_shapefiles_url) --directory-prefix $(target_directory)
-	unzip $(target_shapefile_zipped) -d $(target_directory)
-	shp2pgsql -c -D -I -S -s 4326 $(sql_shapefile) plz_gebiete > $(sql_shapefile)
-	PGPASSWORD=$(PSQL_PASSWORD) psql $(PSQL_ARGS) --file $(sql_shapefile)
-	PGPASSWORD=$(PSQL_PASSWORD) psql $(PSQL_ARGS) --file database/setup.sql
+	# wget $(plz_shapefiles_url) --directory-prefix $(target_directory)
+	# unzip $(target_shapefile_zipped) -d $(target_directory)
+	shp2pgsql -c -D -I -S -s 4326 $(target_shapefile) plz_gebiete > $(sql_shapefile)
+	# PGPASSWORD=$(PSQL_PASSWORD) psql $(PSQL_ARGS) --file $(sql_shapefile)
+	# PGPASSWORD=$(PSQL_PASSWORD) psql $(PSQL_ARGS) --file database/setup.sql
 
 setup_current_infected:
 	mkdir -p data
