@@ -8,7 +8,9 @@ try:
     env = DotEnv()
     env.init_app(app)
 except Exception:
-    app.secret_key = b'some really random key'
+    pass
+
+app.secret_key = b'some really random key'
 
 CORS(app)
 
