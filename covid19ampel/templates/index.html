@@ -1,58 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html lang='de'>
 <head>
+    <!-- 
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../static/css/main.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+            crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" 
+            crossorigin="anonymous">
+    </script>
+
 </head>
-<body style="margin: 5%">
-<div class="bg">
-    <img class="uschi" src="../static/img/icon_1.svg">
-    <img class="kanye" src="../static/img/icon_2.svg">
-    <p class="welcome">Wilkommen bei der</p>
-    <p class="title">Lokale Covid19-Ampel</p>
-    <p class="text">Wir wollen die Hilfe der Bürger nutzen, um einen feineren Überblick über die Verbreitung des
-        Corona-Virus zu
-        bekommen und du kannst uns dabei helfen.</p>
-</div>
-<div class="form">
-    <form method="POST" action="/postcodemap">
-        <label class="ziplabel">Deine PLZ<br>
-            <input type="text" class="zipcodeinput"></label>
-        <label id="redtext">Mir wurde bestätigt, den Corona Virus zu haben.</label>
-        <label id="yellowtext"><b>Ich fühle mich krank und habe mindestens eines der folgenden Symptome:</b> Fieber,
-            Husten, Kurzatmigkeit oder Halsschmerzen. Weitere Symptome können auch Muskel- /Gelenkschmerzen,
-            Kopfschmerzen, Übelkeit/Erbrechen, eine verstopfte Nase oder Durchfall sein.</label>
-        <label id="greentext">Mir wurde bestätigt, den Corona VirMir wurde bestätigt, den Corona Virus zu haben.us zu haben.</label>
-    </form>
+
+<body>
+
+<div class=".container-fluid">
+
+    <div class=".container" style="margin-bottom: 2em">
+        <div class="row">
+            <div class=".col-sm">
+                <img class="img-fluid" src="../static/img/icon_1.svg">
+            </div>
+            <div class=".col-sm">
+                <img class="img-fluid" src="../static/img/icon_2.svg">
+            </div>
+        </div>
+    </div>
+
+    <h2 class="text-center">
+        Die Covid19 Ampel 🚦
+    </h2>
+    <p class="text-justify text-wrap">
+    Wir wollen die Hilfe der Bürger nutzen, um einen feineren Überblick über
+    die Verbreitung des Corona-Virus zu bekommen und du kannst uns dabei
+    helfen mit <b>lokalen Covid19-Ampel</b>.
+    </p>
 </div>
 
-<div class="footer" style="display: table-row">
-    <div class="what" style="display: table-cell">
-        <img src="../static/img/question.svg" alt="Fragezeichen">
-        <h2>Was passiert hier?</h2>
-        <p>Wir benutzen die Fallzahlen der verschiedenen Landkreise und Informationen aus der Bevölkerung, um zu
-            ermitteln, wie betroffen die verschiedenen Gebiete in Deutschland sind.
-            Bitte bedenkt dabei, dass wir lediglich einen Überblick verschaffen, aber nicht die tatsächliche Lage
-            wiedergeben können.</p>
+<form method="POST" action="/postcodemap">
+    <div class="form-group">
+        <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Deine PLZ</span>
+        </div>
+        <input type="text" 
+               class="form-control" 
+               aria-describedby="basic-addon1"
+               name="postcode">
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="ampel" id="ampel-0" value="red">
+            <label class="form-check-label" for="ampel-0">
+                🔴: Mir wurde bestätigt, den Corona Virus zu haben.
+            </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="ampel" id="ampel-1" value="yellow">
+            <label class="form-check-label" for="ampel-1">
+                🟠: <b>Ich fühle mich krank und habe mindestens eines der folgenden Symptome:</b> Fieber, Husten, Kurzatmigkeit oder Halsschmerzen. Weitere Symptome können auch Muskel- /Gelenkschmerzen, Kopfschmerzen, Übelkeit/Erbrechen, eine verstopfte Nase oder Durchfall sein.
+            </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="ampel" id="ampel-2" value="green">
+            <label class="form-check-label" for="ampel-2">
+                🟢: Mir wurde bestätigt, den Corona VirMir wurde bestätigt, den Corona Virus zu haben.us zu haben.
+            </label>
+        </div>
+
+        {{ form.csrf_token }}
+        <div class="row">
+            <div class="col-md-4 col-lg-2">
+                <button type="submit" class="btn btn-primary btn-block">Weiter</button>
+            </div>
+        </div>
     </div>
-    <div class="you" style="display: table-cell">
-        <img src="../static/img/doctor.svg" alt="Stethoskop">
-        <h2>Du kannst uns helfen ...</h2>
-        <p>die Lage genauer zu erfassen. Fülle dafür einfach unser kurzes Formular aus und schon siehst du, wie es
-            momentan aussieht.
-            Egal, wie dein Landkreis eingefärbt ist, behalte einen ruhigen Kopf und versuche nicht, in einen anderen
-            Landkreis zu fliehen.</p>
-    </div>
-    <div class="aservice" style="display: table-cell">
-        <img src="../static/img/logo_b.png" alt="Logo Brandseven GmbH">
-        <h2>Ein Service von</h2>
-        <p>die Lage genauer zu erfassen. Fülle dafür einfach unser kurzes Formular aus und schon siehst du, wie es
-            momentan aussieht.
-            Egal, wie dein Landkreis eingefärbt ist, behalte einen ruhigen Kopf und versuche nicht, in einen anderen
-            Landkreis zu fliehen.</p>
+</form>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <img src="../static/img/question.svg" alt="Fragezeichen">
+            <h2>Was passiert hier?</h2>
+            <p>
+            Wir benutzen die Fallzahlen der verschiedenen Landkreise und
+            Informationen aus der Bevölkerung, um zu ermitteln, wie betroffen
+            die verschiedenen Gebiete in Deutschland sind.  Bitte bedenkt
+            dabei, dass wir lediglich einen Überblick verschaffen, aber nicht
+            die tatsächliche Lage wiedergeben können.
+            </p>
+        </div>
+        <div class="col-sm">
+            <img src="../static/img/doctor.svg" alt="Stethoskop">
+            <h2>Du kannst uns helfen ...</h2>
+            <p>
+            die Lage genauer zu erfassen. Fülle dafür einfach unser kurzes Formular
+            aus und schon siehst du, wie es momentan aussieht.  Egal, wie dein
+            Landkreis eingefärbt ist, behalte einen ruhigen Kopf und versuche
+            nicht, in einen anderen Landkreis zu fliehen.
+            </p>
+        </div>
     </div>
 </div>
+
 </body>
 </html>

@@ -4,19 +4,20 @@ from functools import lru_cache
 from flask_wtf import FlaskForm
 from wtforms import StringField, RadioField, SubmitField, ValidationError
 from wtforms.validators import InputRequired, Length
+from . import app
 
 
 class PostcodeValidator:
     def __init__(self, message=None):
         try:
             login = {
-                'host': os.environ["PSQL_HOST"],
-                'dbname': os.environ["PSQL_DBNAME"],
-                'user': os.environ["PSQL_USER"],
-                'password': os.environ["PSQL_PASSWORD"],
+                'host': app.config["PSQL_HOST"],
+                'dbname': app.config["PSQL_DBNAME"],
+                'user': app.config["PSQL_USER"],
+                'password': app.config["PSQL_PASSWORD"],
             }
             conn = psycopg2.connect(**login)
-        except KeyError:
+        except Exception:
             DATABASE_URL = os.environ['DATABASE_URL']
             conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 

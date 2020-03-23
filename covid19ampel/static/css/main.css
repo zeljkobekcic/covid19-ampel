@@ -141,9 +141,8 @@ body {
 }
 
 .what {
-    top: 1268px;
-    left: 139px;
-    width: 352px;
+    width: 40%
+    max-width:40%
     height: 156px;
     text-align: center;
     font: Regular 16px/22px Roboto;
@@ -155,7 +154,8 @@ body {
 .you {
     top: 1268px;
     left: 507px;
-    width: 352px;
+    width: 40%;
+    max-width: 40%
     height: 156px;
     text-align: center;
     font: Regular 16px/22px Roboto;
