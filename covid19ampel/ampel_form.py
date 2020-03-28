@@ -22,7 +22,7 @@ class PostcodeValidator:
             conn = psycopg2.connect(DATABASE_URL)
 
         else:
-            raise Exception("No database credentials configured!")
+            raise Exception("Could not connect to database")
 
 
 
